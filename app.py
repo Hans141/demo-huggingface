@@ -1,7 +1,7 @@
 import streamlit as st
 from transformers import pipeline
 pipe = pipeline('sentiment-analysis')
-text = st.text_area('enter some text!')
+text = st.text_area('enter some text haha!')
 if text:
   out = pipe(text)
   st.json(out)
