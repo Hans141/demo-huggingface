@@ -16,4 +16,4 @@ jobs:
       - name: Push to hub
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
-        run: git push https://hans@techainer.com:$HF_TOKEN@huggingface.co/spaces/Hans141/demo-test main
+        run: git push https://hans@techainer.com:$HF_TOKEN@huggingface.co/spaces/Hans141/demo-test/tree/main
