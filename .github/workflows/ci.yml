@@ -19,22 +19,16 @@
 #         run: git push https://hans141:$HF_TOKEN@huggingface.co/spaces/Hans141/demo-test/
 name: 'Issue States'
 on:
-    project_card:
-        types: [created, edited, moved]
-
-permissions:
-    repository-projects: read
-    issues: write
-    pull-requests: write
+  issues:
+    types:
+      - opened
 
 jobs:
-    action:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: dessant/issue-states@v2
-              with:
-                  github-token: ${{  secrets.GH_PAT }}
-                  open-issue-columns: 'Backlog'
-                  closed-issue-columns: 'Closed, Done'
-                  log-output: false
-
+  label_issue:
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+          ISSUE_URL: ${{ github.event.issue.html_url }}
+        run: |
+          gh issue edit $ISSUE_URL --add-label "triage"
