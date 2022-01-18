@@ -1,19 +1,41 @@
-name: Sync to Hugging Face hub
-on:
-  push:
-    branches: [main]
+# name: Sync to Hugging Face hub
+# on:
+#   push:
+#     branches: [main]
 
-  # to run this workflow manually from the Actions tab
-  workflow_dispatch:
+#   # to run this workflow manually from the Actions tab
+#   workflow_dispatch:
+
+# jobs:
+#   sync-to-hub:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v2
+#         with:
+#           fetch-depth: 0
+#       - name: Push to hub
+#         env:
+#           HF_TOKEN: ${{ secrets.HF_TOKEN }}
+#         run: git push https://hans141:$HF_TOKEN@huggingface.co/spaces/Hans141/demo-test/
+name: 'Issue States'
+
+on:
+    project_card:
+        types: [created, edited, moved]
+
+permissions:
+    repository-projects: read
+    issues: write
+    pull-requests: write
 
 jobs:
-  sync-to-hub:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: Push to hub
-        env:
-          HF_TOKEN: ${{ secrets.HF_TOKEN }}
-        run: git push https://hans141:$HF_TOKEN@huggingface.co/spaces/Hans141/demo-test/
+    action:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: dessant/issue-states@v2
+              with:
+                  github-token: ${{  secrets.GH_PAT }}
+                  open-issue-columns: 'Backlog'
+                  closed-issue-columns: 'Closed, Done'
+                  log-output: false
+
